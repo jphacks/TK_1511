@@ -1,6 +1,5 @@
 package tk11.jphacks.titech.view.fragment;
 
-import android.app.Fragment;
 import android.content.Intent;
 
 import org.androidannotations.annotations.AfterViews;
@@ -12,7 +11,7 @@ import tk11.jphacks.titech.view.activity.BindingActivity_;
 import tk11.jphacks.titech.view.activity.CallActivity_;
 
 @EFragment(R.layout.fragment_home)
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
 
     @AfterViews
     void onAfterViews() {

@@ -21,5 +21,4 @@ import tk11.jphacks.titech.view.fragment.BindingFragment_;
         Fragment fragment = BindingFragment_.builder().build();
         getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
     }
-
 }
