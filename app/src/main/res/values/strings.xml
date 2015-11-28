@@ -1,3 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">JPHACKS_TK11</string>
+    <!-- App Name-->
+    <string name="app_name">JPHACKS_11</string>
+    <!-- Page Titles (title_(class name)_(page name))-->
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_binding">BindingActivity</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_calling">CallingActivity</string>
+
+    <!-- PageParams -->
+    <!-- Common -->
+
+    <!-- (PageName) -->
+
+
+    <!-- Recycler -->
+    <string name="action_change_recycler">Recycler</string>
+    <string name="action_change_horizontal_card">HorizontalCard</string>
+    <string name="action_change_vertical">Vertical</string>
+    <!-- Dialog Fragment -->
+    <string name="dialog_positive_button">OK</string>
+    <string name="dialog_negative_button">キャンセル</string>
+    <!-- Drawer Menu -->
+    <string name="menu_1">Menu1</string>
+    <string name="menu_2">Menu2</string>
+    <string name="menu_3">Menu3</string>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
