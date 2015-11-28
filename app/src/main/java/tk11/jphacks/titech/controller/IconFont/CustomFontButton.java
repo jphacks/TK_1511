@@ -1,4 +1,4 @@
-package tk11.jphacks.titech.controller.IconFont;
+package tk11.jphacks.titech.controller.iconfont;
 
 import android.content.Context;
 import android.content.res.TypedArray;

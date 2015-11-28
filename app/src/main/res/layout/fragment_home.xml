@@ -8,7 +8,7 @@
 
 
 
-    <tk11.jphacks.titech.controller.IconFont.CustomFontButton
+    <tk11.jphacks.titech.controller.iconfont.CustomFontButton
         android:id="@+id/main_button_binding"
         android:layout_width="150dp"
         android:layout_height="150dp"
@@ -24,7 +24,7 @@
         android:textColor="@android:color/white"
         myapp:customFont="fontawesome.ttf" />
 
-    <tk11.jphacks.titech.controller.IconFont.CustomFontButton
+    <tk11.jphacks.titech.controller.iconfont.CustomFontButton
         android:id="@+id/main_button_calling"
         android:layout_width="150dp"
         android:layout_height="150dp"
