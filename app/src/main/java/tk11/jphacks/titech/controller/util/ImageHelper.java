@@ -12,7 +12,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.widget.ImageView;
-import org.apache.http.entity.mime.content.ByteArrayBody;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,6 +22,9 @@ import java.util.Date;
 
 /**
  * Created by hirokinaganuma on 15/11/28.
+ *
+ * 使うかは不明
+ *
  */
 
 public class ImageHelper {
@@ -98,15 +100,15 @@ public class ImageHelper {
     }
 
     //Convert to multibyte data
-    public static ByteArrayBody toByteArrayBody(Bitmap picture) {
-        if (picture == null) {
-            return null;
-        }
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        picture.compress(Bitmap.CompressFormat.JPEG, 100, bos); // (4)
-        byte[] data = bos.toByteArray();
-        return new ByteArrayBody(data, System.currentTimeMillis() + ".jpg");
-    }
+//    public static ByteArrayBody toByteArrayBody(Bitmap picture) {
+//        if (picture == null) {
+//            return null;
+//        }
+//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//        picture.compress(Bitmap.CompressFormat.JPEG, 100, bos); // (4)
+//        byte[] data = bos.toByteArray();
+//        return new ByteArrayBody(data, System.currentTimeMillis() + ".jpg");
+//    }
 
     //画像の保存
     public static String saveImage(ImageView itemImage, Context context) throws IOException {

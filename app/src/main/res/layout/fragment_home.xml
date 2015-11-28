@@ -7,11 +7,10 @@
     android:background="@android:color/white">
 
 
-
     <tk11.jphacks.titech.controller.iconfont.CustomFontButton
         android:id="@+id/main_button_binding"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignTop="@+id/main_rippleview_rect"
         android:layout_centerHorizontal="true"
         android:layout_gravity="right|bottom"
@@ -20,14 +19,14 @@
         android:background="@drawable/circle_button_binding"
         android:gravity="center"
         android:text="&#xf03d;"
-        android:textSize="70sp"
         android:textColor="@android:color/white"
+        android:textSize="70sp"
         myapp:customFont="fontawesome.ttf" />
 
     <tk11.jphacks.titech.controller.iconfont.CustomFontButton
         android:id="@+id/main_button_calling"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignTop="@+id/main_rippleview_rect"
         android:layout_centerHorizontal="true"
         android:layout_gravity="left|bottom"
@@ -36,10 +35,24 @@
         android:background="@drawable/circle_button_call"
         android:gravity="center"
         android:text="&#xf0c1;"
-        android:textSize="70sp"
         android:textColor="@android:color/white"
+        android:textSize="70sp"
         myapp:customFont="fontawesome.ttf" />
 
+    <tk11.jphacks.titech.controller.iconfont.CustomFontButton
+        android:id="@+id/main_button_setting"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignTop="@+id/main_rippleview_rect"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/circle_button_setting"
+        android:gravity="center"
+        android:text="&#xf013;"
+        android:textColor="@android:color/white"
+        android:textSize="70sp"
+        myapp:customFont="fontawesome.ttf" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imageView1"
@@ -52,6 +65,5 @@
         app:riv_border_color="#333333"
         app:riv_mutate_background="true"
         app:riv_oval="true" />
-
 
 </FrameLayout>
