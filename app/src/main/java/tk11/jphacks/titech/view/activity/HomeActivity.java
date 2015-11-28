@@ -22,5 +22,4 @@ public class HomeActivity extends Activity {
         Fragment fragment = HomeFragment_.builder().build();
         getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
     }
-
 }

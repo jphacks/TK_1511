@@ -1,15 +1,25 @@
 package tk11.jphacks.titech.view.activity;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.app.Fragment;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
 
 import tk11.jphacks.titech.R;
+import tk11.jphacks.titech.view.fragment.SettingFragment_;
 
-public class SettingActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+@EActivity(R.layout.activity_setting)
+public class SettingActivity extends Activity {
+
+    @AfterViews
+    public void onAfterViews() {
+        setFragment();
+    }
+
+    private void setFragment() {
+        Fragment fragment = SettingFragment_.builder().build();
+        getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
     }
 }

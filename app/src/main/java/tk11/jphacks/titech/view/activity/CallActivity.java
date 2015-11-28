@@ -1,15 +1,24 @@
 package tk11.jphacks.titech.view.activity;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.app.Fragment;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
 
 import tk11.jphacks.titech.R;
+import tk11.jphacks.titech.view.fragment.CallFragment_;
 
-public class CallActivity extends AppCompatActivity {
+@EActivity(R.layout.activity_call)
+public class CallActivity extends Activity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call);
+    @AfterViews
+    public void onAfterViews() {
+        setFragment();
+    }
+
+    private void setFragment() {
+        Fragment fragment = CallFragment_.builder().build();
+        getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
     }
 }
