@@ -1,18 +1,16 @@
 package tk11.jphacks.titech.view.fragment;
 
-import android.app.Fragment;
-import android.content.Intent;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 
 import tk11.jphacks.titech.R;
+import tk11.jphacks.titech.controller.animation.RevealTriggerIntent;
 import tk11.jphacks.titech.view.activity.BindingActivity_;
 import tk11.jphacks.titech.view.activity.CallActivity_;
 
 @EFragment(R.layout.fragment_home)
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
 
     @AfterViews
     void onAfterViews() {
@@ -20,13 +18,15 @@ public class HomeFragment extends Fragment {
 
     @Click(R.id.main_button_binding)
     void movePager() {
-        Intent intent = new Intent(getActivity().getApplicationContext(), BindingActivity_.class);
+        RevealTriggerIntent intent = new RevealTriggerIntent(getActivity().getApplicationContext(), BindingActivity_.class);
+        intent.setRevealIntentPivot(getView().findViewById(R.id.main_button_binding));
         startActivity(intent);
     }
 
     @Click(R.id.main_button_calling)
     void moveRecycler() {
-        Intent intent = new Intent(getActivity().getApplicationContext(), CallActivity_.class);
+        RevealTriggerIntent intent = new RevealTriggerIntent(getActivity().getApplicationContext(), CallActivity_.class);
+        intent.setRevealIntentPivot(getView().findViewById(R.id.main_button_calling));
         startActivity(intent);
     }
 }

@@ -1,6 +1,5 @@
 package tk11.jphacks.titech.view.fragment;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Handler;
 
@@ -11,7 +10,7 @@ import tk11.jphacks.titech.R;
 import tk11.jphacks.titech.view.activity.HomeActivity_;
 
 @EFragment(R.layout.fragment_splash)
-public class SplashFragment extends Fragment {
+public class SplashFragment extends BaseFragment {
 
     @AfterViews
     void onAfterViews() {

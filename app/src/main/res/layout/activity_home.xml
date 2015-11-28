@@ -4,6 +4,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="tk11.jphacks.titech.view.activity.HomeActivity"
-    tools:ignore="MergeRootFrame" >
-
-</FrameLayout>
+    tools:ignore="MergeRootFrame"></FrameLayout>
