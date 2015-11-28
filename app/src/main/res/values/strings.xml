@@ -3,10 +3,11 @@
     <!-- App Name-->
     <string name="app_name">JPHACKS_11</string>
     <!-- Page Titles (title_(class name)_(page name))-->
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_pager">PagerActivity</string>
-    <string name="title_activity_recycle_view">RecycleViewActivity</string>
-    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_binding">BindingActivity</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_calling">CallingActivity</string>
 
     <!-- PageParams -->
     <!-- Common -->

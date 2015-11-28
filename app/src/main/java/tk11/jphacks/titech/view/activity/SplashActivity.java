@@ -1,26 +1,24 @@
 package tk11.jphacks.titech.view.activity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.app.Fragment;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
 
 import tk11.jphacks.titech.R;
+import tk11.jphacks.titech.view.fragment.SplashFragment_;
 
-public class SplashActivity extends AppCompatActivity {
+@EActivity(R.layout.activity_splash)
+public class SplashActivity extends Activity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        Handler hdl = new Handler();
-        hdl.postDelayed(new splashHandler(), 500);
+    @AfterViews
+    public void onAfterViews() {
+        setFragment();
     }
-    class splashHandler implements Runnable {
-        public void run() {
-            Intent intent = new Intent(getApplication(), HomeActivity.class);
-            startActivity(intent);
-            SplashActivity.this.finish();
-        }
+
+    private void setFragment() {
+        Fragment fragment = SplashFragment_.builder().build();
+        getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
     }
 }

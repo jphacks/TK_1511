@@ -16,7 +16,7 @@
         android:layout_alignTop="@+id/main_rippleview_rect"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="@string/title_activity_pager"
+        android:text="@string/title_activity_binding"
         android:textSize="18sp" />
 
     <Button
@@ -27,7 +27,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:gravity="center"
-        android:text="@string/title_activity_recycle_view"
+        android:text="@string/title_activity_calling"
         android:textSize="18sp" />
 
     <EditText
