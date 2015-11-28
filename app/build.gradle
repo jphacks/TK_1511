@@ -28,6 +28,7 @@ dependencies {
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
     compile 'com.squareup.picasso:picasso:2.5.+'
+    compile 'com.makeramen:roundedimageview:2.2.1'
 }
 
 apt {
