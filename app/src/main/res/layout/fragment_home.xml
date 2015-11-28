@@ -1,14 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:myapp="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
 
-    <Button
+
+    <tk11.jphacks.titech.controller.IconFont.CustomFontButton
         android:id="@+id/main_button_binding"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignTop="@+id/main_rippleview_rect"
         android:layout_centerHorizontal="true"
         android:layout_gravity="right|bottom"
@@ -16,12 +19,16 @@
         android:layout_marginRight="16dp"
         android:background="@drawable/circle_button_binding"
         android:gravity="center"
-        android:textSize="18sp" />
+        android:text="&#xf03d;"
+        android:textSize="70sp"
+        android:textColor="@android:color/white"
+        myapp:customFont="fontawesome.ttf" />
+
 
     <Button
         android:id="@+id/main_button_calling"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignTop="@+id/main_rippleview_rect"
         android:layout_centerHorizontal="true"
         android:layout_gravity="left|bottom"
