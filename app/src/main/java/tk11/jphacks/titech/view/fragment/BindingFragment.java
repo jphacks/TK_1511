@@ -12,9 +12,11 @@ import tk11.jphacks.titech.controller.animation.RevealEffect;
 @EFragment(R.layout.fragment_binding)
 public class BindingFragment extends BaseFragment {
 
+    private static Activity activity;
+
     @AfterViews
     void onAfterViews() {
-        Activity activity = getActivity();
+        activity = getActivity();
         RevealEffect.bindAnimation(
                 (ViewGroup) activity.getWindow().getDecorView().findViewById(android.R.id.content),
                 activity.getIntent(),
