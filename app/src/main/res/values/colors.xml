@@ -14,4 +14,8 @@
     <color name="black_overlay">#66000000</color>
     <color name="red_filter">#32FF7979</color>
     <color name="white_filter">#32FFFFFF</color>
+    <color name="clear_filter">#2cffc760</color>
+    <color name="green_filter">#1900FF90</color>
+    <color name="orange_filter">#1EFF7700</color>
+    <color name="blue_filter">#20009DFF</color>
 </resources>
