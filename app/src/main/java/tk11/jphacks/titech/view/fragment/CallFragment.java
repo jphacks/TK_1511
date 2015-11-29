@@ -127,6 +127,15 @@ public class CallFragment extends BaseFragment {
         whiteCanvas.addSrc(_msLocal, TRACK_NUMBAR);
         whiteCanvas.setStandardFilter(ExtensionBrowserCanvas.WHITE_FILTER);
 
+        greenCanvas.addSrc(_msLocal, TRACK_NUMBAR);
+        greenCanvas.setStandardFilter(ExtensionBrowserCanvas.GREEN_FILTER);
+
+        orangeCanvas.addSrc(_msLocal, TRACK_NUMBAR);
+        orangeCanvas.setStandardFilter(ExtensionBrowserCanvas.ORANGE_FILTER);
+
+        blueCanvas.addSrc(_msLocal, TRACK_NUMBAR);
+        blueCanvas.setStandardFilter(ExtensionBrowserCanvas.BLUE_FILTER);
+
         frameCanvas.addSrc(_msLocal, TRACK_NUMBAR);
         frameCanvas.setFrameFilter();
 
