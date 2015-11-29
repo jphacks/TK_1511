@@ -19,7 +19,7 @@ public class SplashFragment extends BaseFragment {
 
     private void startSplash() {
         Handler hdl = new Handler();
-        hdl.postDelayed(new splashHandler(), 500);
+        hdl.postDelayed(new splashHandler(), 1000);
     }
 
     class splashHandler implements Runnable {
