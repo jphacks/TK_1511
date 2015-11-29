@@ -61,6 +61,15 @@ public class CallFragment extends BaseFragment {
     @ViewById(R.id.white_filter_canvas)
     ExtensionBrowserCanvas whiteCanvas;
 
+    @ViewById(R.id.blue_filter_canvas)
+    ExtensionBrowserCanvas blueCanvas;
+
+    @ViewById(R.id.orange_filter_canvas)
+    ExtensionBrowserCanvas orangeCanvas;
+
+    @ViewById(R.id.green_filter_canvas)
+    ExtensionBrowserCanvas greenCanvas;
+
     @ViewById(R.id.frame_filter_canvas)
     ExtensionBrowserCanvas frameCanvas;
 
@@ -78,6 +87,21 @@ public class CallFragment extends BaseFragment {
     @Click(R.id.white_filter_canvas)
     void clickWhiteFilter() {
         extentionBrowserCanvas.setStandardFilter(ExtensionBrowserCanvas.WHITE_FILTER);
+    }
+
+    @Click(R.id.blue_filter_canvas)
+    void clickBlueFilter() {
+        extentionBrowserCanvas.setStandardFilter(ExtensionBrowserCanvas.BLUE_FILTER);
+    }
+
+    @Click(R.id.orange_filter_canvas)
+    void clickOrangeFilter() {
+        extentionBrowserCanvas.setStandardFilter(ExtensionBrowserCanvas.ORANGE_FILTER);
+    }
+
+    @Click(R.id.green_filter_canvas)
+    void clickGreenFilter() {
+        extentionBrowserCanvas.setStandardFilter(ExtensionBrowserCanvas.GREEN_FILTER);
     }
 
     @Click(R.id.frame_filter_canvas)
