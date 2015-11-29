@@ -54,7 +54,6 @@ public class ExtensionBrowserCanvas extends FrameLayout{
         setView();
     }
 
-
     public Canvas getBrowserCanvas() {
         return browserCanvas;
     }

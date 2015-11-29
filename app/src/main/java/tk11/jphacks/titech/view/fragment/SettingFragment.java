@@ -246,7 +246,11 @@ public class SettingFragment extends BaseFragment {
     public void setRegisteredInfo() {
         nameText.setText(mSharedPrefsHelper.loadName());
         idText.setText(mSharedPrefsHelper.loadKeyStorePid());
-        iconImageView.setImageURI(Uri.parse(mSharedPrefsHelper.loadImageUri()));
+        if(mSharedPrefsHelper.loadImageUri()==""){
+            iconImageView.setImageResource(R.drawable.no_image_icon);
+        }else{
+            iconImageView.setImageURI(m_uri);
+        }
     }
 
     private void showGallery() {

@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
+
+import com.daimajia.swipe.SwipeLayout;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -52,6 +55,12 @@ public class CallFragment extends BaseFragment {
     private String[] _listPeerIds;
     private boolean _bCalling;
 
+    @ViewById(R.id.sliding_layout)
+    SwipeLayout slidingUpPanelLayout;
+
+    @ViewById(R.id.button_container)
+    HorizontalScrollView buttonContainer;
+
     @Click(R.id.red_filter_button)
     void clickRedFilter() {
         extentionBrowserCanvas.setStandardFilter(ExtensionBrowserCanvas.RED_FILTER);
@@ -77,6 +86,11 @@ public class CallFragment extends BaseFragment {
         extentionBrowserCanvas.clearFilter();
     }
 
+    @Click(R.id.sliding_layout)
+    void clickSlidingLayout() {
+    }
+
+
     @AfterViews
     void onAfterViews() {
         Activity activity = getActivity();
@@ -88,6 +102,42 @@ public class CallFragment extends BaseFragment {
                 getResources()
         );
 
+        slidingUpPanelLayout.addDrag(SwipeLayout.DragEdge.Bottom, buttonContainer);
+        slidingUpPanelLayout.setRightSwipeEnabled(false);
+        slidingUpPanelLayout.setLeftSwipeEnabled(false);
+
+        slidingUpPanelLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
+            @Override
+            public void onClose(SwipeLayout layout) {
+                //when the SurfaceView totally cover the BottomView.
+            }
+
+            @Override
+            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+                //you are swiping.
+            }
+
+            @Override
+            public void onStartOpen(SwipeLayout layout) {
+
+            }
+
+            @Override
+            public void onOpen(SwipeLayout layout) {
+                //when the BottomView totally show.
+            }
+
+            @Override
+            public void onStartClose(SwipeLayout layout) {
+
+            }
+
+            @Override
+            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+                //when user's hand released.
+            }
+        });
+
         Window wnd = getActivity().getWindow();
         wnd.addFlags(Window.FEATURE_NO_TITLE);
 
@@ -97,6 +147,7 @@ public class CallFragment extends BaseFragment {
 
         options.key = "20acaf0d-4c8f-4d3b-bfa0-d320db8f283c";
         options.domain = "tk11.titech.jphacks";
+
 
 
         _peer = new Peer(getActivity(), options);
