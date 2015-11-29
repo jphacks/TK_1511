@@ -2,6 +2,9 @@ package tk11.jphacks.titech.view.fragment;
 
 import android.app.Activity;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -9,13 +12,14 @@ import org.androidannotations.annotations.EFragment;
 
 import tk11.jphacks.titech.R;
 import tk11.jphacks.titech.controller.animation.RevealEffect;
-import tk11.jphacks.titech.controller.animation.RevealTriggerIntent;
-import tk11.jphacks.titech.view.activity.BindingActivity_;
 
 @EFragment(R.layout.fragment_binding)
 public class BindingFragment extends BaseFragment {
 
     private static Activity activity;
+    private EditText partnerIdText;
+    private TextView partnerNameText;
+    private ImageView iconImageView;
 
     @AfterViews
     void onAfterViews() {
@@ -27,13 +31,35 @@ public class BindingFragment extends BaseFragment {
                 activity.getWindow(),
                 getResources()
         );
+        bindComponent();
     }
 
-    @Click(R.id.main_button_binding)
+    @Click(R.id.button_binding)
     void bindingButtonClicked() {
-        RevealTriggerIntent intent = new RevealTriggerIntent(getActivity().getApplicationContext(), BindingActivity_
-                .class);
-        intent.setRevealIntentPivot(getView().findViewById(R.id.main_button_binding));
-        startActivity(intent);
+        startBinding();
     }
+
+    public void bindComponent() {
+        partnerIdText = (EditText) activity.findViewById(R.id.partner_id_text);
+        partnerNameText = (TextView) activity.findViewById(R.id.partner_name_text);
+    }
+
+    public void setRegisteredInfo() {
+        partnerNameText.setText(mSharedPrefsHelper.loadPartnerName());
+        partnerIdText.setText(mSharedPrefsHelper.loadPartnerKeyStorePid());
+
+        //TODO アイコンの取得
+        /**
+        if(mSharedPrefsHelper.loadImageUri()==""){
+            iconImageView.setImageResource(R.drawable.no_image_icon);
+        }else{
+            iconImageView.setImageURI(Uri.parse(mSharedPrefsHelper.loadImageUri()));
+        }
+         **/
+    }
+
+    public void startBinding(){
+
+    }
+
 }
