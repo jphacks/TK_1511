@@ -6,12 +6,17 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.bartoszlipinski.xmltag.annotations.XmlTag;
+import com.plattysoft.leonids.ParticleSystem;
+
 import io.skyway.Peer.Browser.Canvas;
 import io.skyway.Peer.Browser.MediaStream;
+import tk11.jphacks.titech.R;
 
 /**
  * Created by atsuhirotsuruta on 11/29/2015 AD.
  */
+@XmlTag("ExtensionBrowserCanvas")
 public class ExtensionBrowserCanvas extends FrameLayout{
     private LinearLayout filter;
     private LinearLayout animationFilter;

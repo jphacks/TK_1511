@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 
 import io.skyway.Peer.Browser.Canvas;
@@ -31,24 +32,12 @@ import io.skyway.Peer.PeerError;
 import io.skyway.Peer.PeerOption;
 import tk11.jphacks.titech.R;
 import tk11.jphacks.titech.controller.animation.RevealEffect;
+import tk11.jphacks.titech.view.view.ExtensionBrowserCanvas;
 
 @EFragment(R.layout.fragment_call)
 public class CallFragment extends BaseFragment {
 
-    @AfterViews
-    void onAfterViews() {
-        Activity activity = getActivity();
-        RevealEffect.bindAnimation(
-                (ViewGroup) activity.getWindow().getDecorView().findViewById(android.R.id.content),
-                activity.getIntent(),
-                activity.getApplicationContext(),
-                activity.getWindow(),
-                getResources()
-        );
-
-    }
-
-    private static final String TAG = MediaActivity.class.getSimpleName();
+    private static final String TAG = CallFragment.class.getSimpleName();
 
     private Peer _peer;
     private MediaConnection _media;
@@ -61,21 +50,34 @@ public class CallFragment extends BaseFragment {
     private String   _id;
     private String[] _listPeerIds;
     private boolean  _bCalling;
-    private ExtentionBrowserCanvas extentionBrowserCanvas;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @ViewById(R.id.extension_canvas)
+    ExtensionBrowserCanvas extentionBrowserCanvas;
 
-        Window wnd = getWindow();
+    @ViewById(R.id.svPrimary)
+    ExtensionBrowserCanvas primaryCanvas;
+
+    @ViewById(R.id.btnAction)
+    Button btnAction;
+
+    @ViewById(R.id.tvOwnId)
+    TextView tvOwnId;
+
+    @AfterViews
+    void onAfterViews() {
+        Activity activity = getActivity();
+        RevealEffect.bindAnimation(
+                (ViewGroup) activity.getWindow().getDecorView().findViewById(android.R.id.content),
+                activity.getIntent(),
+                activity.getApplicationContext(),
+                activity.getWindow(),
+                getResources()
+        );
+
+        Window wnd = getActivity().getWindow();
         wnd.addFlags(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.activity_video_chat);
-        ButterKnife.bind(this);
-        extentionBrowserCanvas = (ExtentionBrowserCanvas) findViewById(R.id.extension_canvas);
-
         _handler = new Handler(Looper.getMainLooper());
-        Context context = getApplicationContext();
 
         //////////////////////////////////////////////////////////////////////
         //////////////////  START: Initialize SkyWay Peer ////////////////////
@@ -119,7 +121,6 @@ public class CallFragment extends BaseFragment {
         //
         // Initialize views
         //
-        Button btnAction = (Button) findViewById(R.id.btnAction);
         btnAction.setEnabled(true);
         btnAction.setOnClickListener(new View.OnClickListener()
         {
@@ -137,8 +138,8 @@ public class CallFragment extends BaseFragment {
                 v.setEnabled(true);
             }
         });
-    }
 
+    }
 
     /**
      * Media connecting to remote peer.
@@ -255,11 +256,6 @@ public class CallFragment extends BaseFragment {
                 String strMessage = "" + error;
                 String strLabel = getString(android.R.string.ok);
 
-                MessageDialogFragment dialog = new MessageDialogFragment();
-                dialog.setPositiveLabel(strLabel);
-                dialog.setMessage(strMessage);
-
-                dialog.show(getFragmentManager(), "error");
             }
         });
 
@@ -293,8 +289,7 @@ public class CallFragment extends BaseFragment {
             {
                 _msRemote = (MediaStream) object;
 
-                Canvas canvas = (Canvas) findViewById(R.id.svPrimary);
-                canvas.addSrc(_msRemote, 0);
+                primaryCanvas.addSrc(_msRemote, 0);
             }
         });
 
@@ -307,9 +302,7 @@ public class CallFragment extends BaseFragment {
                 if (null == _msRemote) {
                     return;
                 }
-
-                Canvas canvas = (Canvas) findViewById(R.id.svPrimary);
-                canvas.removeSrc(_msRemote, 0);
+                primaryCanvas.removeSrc(_msRemote, 0);
 
                 _msRemote = null;
 
@@ -413,23 +406,6 @@ public class CallFragment extends BaseFragment {
             public void run() {
                 FragmentManager mgr = getFragmentManager();
 
-                PeerListDialogFragment dialog = new PeerListDialogFragment();
-                dialog.setListener(
-                        new PeerListDialogFragment.PeerListDialogFragmentListener() {
-                            @Override
-                            public void onItemClick(final String item) {
-
-                                _handler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        calling(item);
-                                    }
-                                });
-                            }
-                        });
-                dialog.setItems(_listPeerIds);
-
-                dialog.show(mgr, "peerlist");
             }
         });
     }
@@ -457,7 +433,6 @@ public class CallFragment extends BaseFragment {
         _handler.post(new Runnable() {
             @Override
             public void run() {
-                Button btnAction = (Button) findViewById(R.id.btnAction);
                 if (null != btnAction) {
                     if (false == _bCalling) {
                         btnAction.setText("Calling");
@@ -466,7 +441,6 @@ public class CallFragment extends BaseFragment {
                     }
                 }
 
-                TextView tvOwnId = (TextView) findViewById(R.id.tvOwnId);
                 if (null != tvOwnId) {
                     if (null == _id) {
                         tvOwnId.setText("");
@@ -487,8 +461,7 @@ public class CallFragment extends BaseFragment {
         closing();
 
         if (null != _msRemote) {
-            Canvas canvas = (Canvas) findViewById(R.id.svPrimary);
-            canvas.removeSrc(_msRemote, 0);
+            primaryCanvas.removeSrc(_msRemote, 0);
 
             _msRemote.close();
 
@@ -533,33 +506,33 @@ public class CallFragment extends BaseFragment {
 
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         // Disable Sleep and Screen Lock
-        Window wnd = getWindow();
+        Window wnd = getActivity().getWindow();
         wnd.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         wnd.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         // Set volume control stream type to WebRTC audio.
-        setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
+        getActivity().setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         // Set default volume control stream type.
-        setVolumeControlStream(AudioManager.USE_DEFAULT_STREAM_TYPE);
+        getActivity().setVolumeControlStream(AudioManager.USE_DEFAULT_STREAM_TYPE);
 
         super.onPause();
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         // Enable Sleep and Screen Lock
-        Window wnd = getWindow();
+        Window wnd = getActivity().getWindow();
         wnd.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         wnd.clearFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
@@ -567,7 +540,7 @@ public class CallFragment extends BaseFragment {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         destroyPeer();
 
         _listPeerIds = null;
@@ -575,8 +548,4 @@ public class CallFragment extends BaseFragment {
 
         super.onDestroy();
     }
-
-
-
-
 }
