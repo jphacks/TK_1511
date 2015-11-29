@@ -39,15 +39,11 @@ import tk11.jphacks.titech.view.view.ExtensionBrowserCanvas;
 public class CallFragment extends BaseFragment {
 
     private static final String TAG = CallFragment.class.getSimpleName();
-
     private Peer _peer;
     private MediaConnection _media;
-
     private MediaStream _msLocal;
     private MediaStream _msRemote;
-
     private Handler _handler;
-
     private String   _id;
     private String[] _listPeerIds;
     private boolean  _bCalling;
@@ -89,8 +85,6 @@ public class CallFragment extends BaseFragment {
         extentionBrowserCanvas.clearFilter();
     }
 
-
-
     @AfterViews
     void onAfterViews() {
         Activity activity = getActivity();
@@ -107,48 +101,21 @@ public class CallFragment extends BaseFragment {
 
         _handler = new Handler(Looper.getMainLooper());
 
-        //////////////////////////////////////////////////////////////////////
-        //////////////////  START: Initialize SkyWay Peer ////////////////////
-        //////////////////////////////////////////////////////////////////////
-
-        // Please check this page. >> https://skyway.io/ds/
         PeerOption options = new PeerOption();
 
-        //Enter your API Key.
         options.key = "20acaf0d-4c8f-4d3b-bfa0-d320db8f283c";
-        //Enter your registered Domain.
         options.domain = "tk11.titech.jphacks";
 
-
-        // SKWPeer has many options. Please check the document. >> http://nttcom.github.io/skyway/docs/
 
         _peer = new Peer(getActivity(), options);
         setPeerCallback(_peer);
 
-        //////////////////////////////////////////////////////////////////////
-        ////////////////// END: Initialize SkyWay Peer ///////////////////////
-        //////////////////////////////////////////////////////////////////////
-
-
-        //////////////////////////////////////////////////////////////////////
-        ////////////////// START: Get Local Stream   /////////////////////////
-        //////////////////////////////////////////////////////////////////////
         Navigator.initialize(_peer);
         MediaConstraints constraints = new MediaConstraints();
         _msLocal = Navigator.getUserMedia(constraints);
 
         extentionBrowserCanvas.addSrc(_msLocal, 0);
-
-        //////////////////////////////////////////////////////////////////////
-        //////////////////// END: Get Local Stream   /////////////////////////
-        //////////////////////////////////////////////////////////////////////
-
         _bCalling = false;
-
-
-        //
-        // Initialize views
-        //
         btnAction.setEnabled(true);
         btnAction.setOnClickListener(new View.OnClickListener()
         {
@@ -174,9 +141,6 @@ public class CallFragment extends BaseFragment {
      * @param strPeerId Remote peer.
      */
     void calling(String strPeerId) {
-        //////////////////////////////////////////////////////////////////////
-        ////////////////// START: Calling SkyWay Peer   //////////////////////
-        //////////////////////////////////////////////////////////////////////
 
         if (null == _peer) {
             return;
@@ -197,29 +161,14 @@ public class CallFragment extends BaseFragment {
             _bCalling = true;
         }
 
-        //////////////////////////////////////////////////////////////////////
-        /////////////////// END: Calling SkyWay Peer   ///////////////////////
-        //////////////////////////////////////////////////////////////////////
         updateUI();
     }
 
-
-
-    //////////Start:Set Peer callback////////////////
-    ////////////////////////////////////////////////
     private void setPeerCallback(Peer peer) {
-        //////////////////////////////////////////////////////////////////////////////////
-        ///////////////////// START: Set SkyWay peer callback   //////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////
-
-        // !!!: Event/Open
-        peer.on(Peer.PeerEventEnum.OPEN, new OnCallback()
-        {
+        peer.on(Peer.PeerEventEnum.OPEN, new OnCallback() {
             @Override
-            public void onCallback(Object object)
-            {
+            public void onCallback(Object object) {
                 Log.d(TAG, "[On/Open]");
-
                 if (object instanceof String) {
                     _id = (String) object;
                     Log.d(TAG, "ID:" + _id);
@@ -228,9 +177,7 @@ public class CallFragment extends BaseFragment {
             }
         });
 
-        // !!!: Event/Call
-        peer.on(Peer.PeerEventEnum.CALL, new OnCallback()
-        {
+        peer.on(Peer.PeerEventEnum.CALL, new OnCallback() {
             @Override
             public void onCallback(Object object)
             {
@@ -286,10 +233,6 @@ public class CallFragment extends BaseFragment {
 
             }
         });
-
-        //////////////////////////////////////////////////////////////////////////////////
-        /////////////////////// END: Set SkyWay peer callback   //////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////
     }
 
 
@@ -305,11 +248,6 @@ public class CallFragment extends BaseFragment {
 
 
     void setMediaCallback(MediaConnection media) {
-        //////////////////////////////////////////////////////////////////////////////////
-        //////////////  START: Set SkyWay peer Media connection callback   ///////////////
-        //////////////////////////////////////////////////////////////////////////////////
-
-        // !!!: MediaEvent/Stream
         media.on(MediaConnection.MediaEventEnum.STREAM, new OnCallback()
         {
             @Override
@@ -360,10 +298,6 @@ public class CallFragment extends BaseFragment {
         ///////////////  END: Set SkyWay peer Media connection callback   ////////////////
         //////////////////////////////////////////////////////////////////////////////////
     }
-
-
-
-
 
 
     //Unset media connection event callback.
@@ -553,7 +487,6 @@ public class CallFragment extends BaseFragment {
     public void onPause() {
         // Set default volume control stream type.
         getActivity().setVolumeControlStream(AudioManager.USE_DEFAULT_STREAM_TYPE);
-
         super.onPause();
     }
 
@@ -563,17 +496,14 @@ public class CallFragment extends BaseFragment {
         Window wnd = getActivity().getWindow();
         wnd.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         wnd.clearFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-
         super.onStop();
     }
 
     @Override
     public void onDestroy() {
         destroyPeer();
-
         _listPeerIds = null;
         _handler = null;
-
         super.onDestroy();
     }
 }
