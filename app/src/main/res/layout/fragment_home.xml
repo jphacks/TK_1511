@@ -8,23 +8,23 @@
 
 
     <tk11.jphacks.titech.controller.iconfont.CustomFontButton
-        android:id="@+id/main_button_binding"
+        android:id="@+id/main_button_calling"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignTop="@+id/main_rippleview_rect"
         android:layout_centerHorizontal="true"
         android:layout_gravity="right|bottom"
         android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/circle_button_binding"
+        android:background="@drawable/circle_button_call"
         android:gravity="center"
         android:text="&#xf03d;"
         android:textColor="@android:color/white"
         android:textSize="70sp"
-        myapp:customFont="fontawesome.ttf" />
+        myapp:customFont="fontawesome.ttf"
+        android:layout_marginRight="16dp" />
 
     <tk11.jphacks.titech.controller.iconfont.CustomFontButton
-        android:id="@+id/main_button_calling"
+        android:id="@+id/main_button_binding"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignTop="@+id/main_rippleview_rect"
@@ -32,7 +32,7 @@
         android:layout_gravity="left|bottom"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
-        android:background="@drawable/circle_button_call"
+        android:background="@drawable/circle_button_binding"
         android:gravity="center"
         android:text="&#xf0c1;"
         android:textColor="@android:color/white"

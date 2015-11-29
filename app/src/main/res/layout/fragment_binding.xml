@@ -11,13 +11,14 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal|bottom"
+        android:layout_gravity="left|bottom"
         android:layout_marginBottom="16dp"
         android:background="@drawable/circle_button_call"
         android:gravity="center"
         android:text="&#xf0c1;"
         android:textColor="@android:color/white"
         android:textSize="70sp"
-        myapp:customFont="fontawesome.ttf" />
+        myapp:customFont="fontawesome.ttf"
+        android:layout_marginLeft="16dp" />
 
 </FrameLayout>
