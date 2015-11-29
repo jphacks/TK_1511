@@ -5,13 +5,10 @@ import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.HorizontalScrollView;
-import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 
@@ -42,10 +39,10 @@ public class CallFragment extends BaseFragment {
     ExtensionBrowserCanvas extentionBrowserCanvas;
     @ViewById(R.id.svPrimary)
     ExtensionBrowserCanvas primaryCanvas;
-    @ViewById(R.id.btnAction)
-    Button btnAction;
-    @ViewById(R.id.tvOwnId)
-    TextView tvOwnId;
+    @ViewById(R.id.sliding_layout)
+    SwipeLayout slidingUpPanelLayout;
+    @ViewById(R.id.button_container)
+    HorizontalScrollView buttonContainer;
     private Peer _peer;
     private MediaConnection _media;
     private MediaStream _msLocal;
@@ -54,12 +51,6 @@ public class CallFragment extends BaseFragment {
     private String _id;
     private String[] _listPeerIds;
     private boolean _bCalling;
-
-    @ViewById(R.id.sliding_layout)
-    SwipeLayout slidingUpPanelLayout;
-
-    @ViewById(R.id.button_container)
-    HorizontalScrollView buttonContainer;
 
     @Click(R.id.red_filter_button)
     void clickRedFilter() {
@@ -149,7 +140,6 @@ public class CallFragment extends BaseFragment {
         options.domain = "tk11.titech.jphacks";
 
 
-
         _peer = new Peer(getActivity(), options);
         setPeerCallback(_peer);
 
@@ -159,21 +149,6 @@ public class CallFragment extends BaseFragment {
 
         extentionBrowserCanvas.addSrc(_msLocal, 0);
         _bCalling = false;
-        btnAction.setEnabled(true);
-        btnAction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setEnabled(false);
-
-                if (!_bCalling) {
-                    listingPeers();
-                } else {
-                    closing();
-                }
-                v.setEnabled(true);
-            }
-        });
-
     }
 
     /**
@@ -202,7 +177,6 @@ public class CallFragment extends BaseFragment {
             _bCalling = true;
         }
 
-        updateUI();
     }
 
     private void setPeerCallback(Peer peer) {
@@ -213,7 +187,6 @@ public class CallFragment extends BaseFragment {
                 if (object instanceof String) {
                     _id = (String) object;
                     Log.d(TAG, "ID:" + _id);
-                    updateUI();
                 }
             }
         });
@@ -234,7 +207,6 @@ public class CallFragment extends BaseFragment {
 
                 _bCalling = true;
 
-                updateUI();
             }
         });
 
@@ -305,7 +277,6 @@ public class CallFragment extends BaseFragment {
                 _media = null;
                 _bCalling = false;
 
-                updateUI();
             }
         });
 
@@ -420,30 +391,6 @@ public class CallFragment extends BaseFragment {
             _media.close();
         }
     }
-
-    void updateUI() {
-        _handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (null != btnAction) {
-                    if (false == _bCalling) {
-                        btnAction.setText("Calling");
-                    } else {
-                        btnAction.setText("Hang up");
-                    }
-                }
-
-                if (null != tvOwnId) {
-                    if (null == _id) {
-                        tvOwnId.setText("");
-                    } else {
-                        tvOwnId.setText(_id);
-                    }
-                }
-            }
-        });
-    }
-
 
     /**
      * Destroy Peer object.

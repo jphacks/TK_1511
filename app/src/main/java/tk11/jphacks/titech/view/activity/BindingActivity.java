@@ -10,7 +10,7 @@ import tk11.jphacks.titech.R;
 import tk11.jphacks.titech.view.fragment.BindingFragment_;
 
 @EActivity(R.layout.activity_binding)
- public class BindingActivity extends Activity {
+public class BindingActivity extends Activity {
 
     @AfterViews
     public void onAfterViews() {
