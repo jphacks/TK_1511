@@ -4,7 +4,7 @@
     xmlns:myapp="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_dark">
+    android:background="@color/base_beige">
 
 
     <tk11.jphacks.titech.controller.iconfont.CustomFontButton
@@ -56,13 +56,14 @@
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imageView1"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         android:layout_gravity="center"
         android:layout_marginBottom="50dp"
         android:scaleType="centerCrop"
         android:src="@drawable/example_img"
-        app:riv_border_color="#333333"
+        app:riv_border_width="10dp"
+        app:riv_border_color="@android:color/white"
         app:riv_mutate_background="true"
         app:riv_oval="true" />
 
