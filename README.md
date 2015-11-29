@@ -1,6 +1,7 @@
 # Vible
 ## 製品概要
 ![gifanim1](https://github.com/jphacks/TK_11/blob/master/anim.gif)
+![gifanim1](https://github.com/jphacks/TK_11/blob/master/anim2.gif)
 
 カップル同士が使えるテレビ電話アプリ。
 ### 背景
