@@ -18,16 +18,16 @@
         android:text="白" />
 
     <Button
-        android:id="@+id/frame_filter_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="フレーム" />
-
-    <Button
         android:id="@+id/star_anim_filter_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="キラキラ" />
+
+    <Button
+        android:id="@+id/frame_filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="フレーム" />
 
     <Button
         android:id="@+id/reset_filter_button"
