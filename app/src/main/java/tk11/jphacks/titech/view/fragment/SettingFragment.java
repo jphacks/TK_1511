@@ -64,6 +64,7 @@ public class SettingFragment extends BaseFragment {
         nameText = (EditText) activity.findViewById(R.id.name_text);
         idText = (EditText) activity.findViewById(R.id.id_text);
         iconImageView = (ImageView) activity.findViewById(R.id.imageView);
+        m_uri = Uri.parse(mSharedPrefsHelper.loadImageUri());
     }
 
 
