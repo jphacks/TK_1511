@@ -71,8 +71,8 @@ public class SettingFragment extends BaseFragment {
     public void setRegisteredInfo() {
         nameText.setText(mSharedPrefsHelper.loadName());
         idText.setText(mSharedPrefsHelper.loadKeyStorePid());
-        if(m_uri==null){
-            iconImageView.setImageResource(R.drawable.no_image_small);
+        if(mSharedPrefsHelper.loadImageUri()==""){
+            iconImageView.setImageResource(R.drawable.no_image_icon);
         }else{
             iconImageView.setImageURI(m_uri);
         }
