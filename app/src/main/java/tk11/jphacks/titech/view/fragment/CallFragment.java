@@ -110,9 +110,9 @@ public class CallFragment extends BaseFragment {
                 getResources()
         );
 
-        slidingUpPanelLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
         slidingUpPanelLayout.addDrag(SwipeLayout.DragEdge.Bottom, buttonContainer);
-
+        slidingUpPanelLayout.setRightSwipeEnabled(false);
+        slidingUpPanelLayout.setLeftSwipeEnabled(false);
 
         slidingUpPanelLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
             @Override
