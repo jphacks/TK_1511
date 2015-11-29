@@ -11,7 +11,6 @@ import android.provider.MediaStore;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -52,12 +51,12 @@ public class SettingFragment extends BaseFragment {
         mSharedPrefsHelper.saveName(nameText.getText().toString());
         mSharedPrefsHelper.saveKeyStorePid(idText.getText().toString());
         mSharedPrefsHelper.saveImageUri(m_uri.toString());
+        activity.finish();
     }
 
 
     @Click(R.id.main_button_image_register)
     void imageRegisterButtonClicked() {
-        Toast.makeText(activity.getApplicationContext(), "SHOWGALLEY", Toast.LENGTH_SHORT).show();
         showGallery();
     }
 
