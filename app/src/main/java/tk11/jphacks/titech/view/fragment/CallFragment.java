@@ -2,19 +2,14 @@ package tk11.jphacks.titech.view.fragment;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.media.AudioManager;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.HorizontalScrollView;
-import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 
@@ -24,7 +19,6 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 
-import io.skyway.Peer.Browser.Canvas;
 import io.skyway.Peer.Browser.MediaConstraints;
 import io.skyway.Peer.Browser.MediaStream;
 import io.skyway.Peer.Browser.Navigator;
@@ -57,11 +51,6 @@ public class CallFragment extends BaseFragment {
     @ViewById(R.id.svPrimary)
     ExtensionBrowserCanvas primaryCanvas;
 
-    @ViewById(R.id.btnAction)
-    Button btnAction;
-
-    @ViewById(R.id.tvOwnId)
-    TextView tvOwnId;
 
     @ViewById(R.id.sliding_layout)
     SwipeLayout slidingUpPanelLayout;
@@ -167,24 +156,6 @@ public class CallFragment extends BaseFragment {
 
         extentionBrowserCanvas.addSrc(_msLocal, 0);
         _bCalling = false;
-        btnAction.setEnabled(true);
-        btnAction.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                v.setEnabled(false);
-
-                if (!_bCalling) {
-                    listingPeers();
-                }
-                else {
-                    closing();
-                }
-                v.setEnabled(true);
-            }
-        });
-
     }
 
     /**
@@ -443,26 +414,7 @@ public class CallFragment extends BaseFragment {
 
     void updateUI()
     {
-        _handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (null != btnAction) {
-                    if (false == _bCalling) {
-                        btnAction.setText("Calling");
-                    } else {
-                        btnAction.setText("Hang up");
-                    }
-                }
 
-                if (null != tvOwnId) {
-                    if (null == _id) {
-                        tvOwnId.setText("");
-                    } else {
-                        tvOwnId.setText(_id);
-                    }
-                }
-            }
-        });
     }
 
 
