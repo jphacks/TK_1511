@@ -9,8 +9,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -27,6 +27,10 @@ public class SettingFragment extends BaseFragment {
     private float viewWidth;
     private static Activity activity;
 
+    private EditText nameText;
+    private EditText idText;
+    private ImageView iconImageView;
+
     @AfterViews
     void onAfterViews() {
         activity = getActivity();
@@ -38,16 +42,38 @@ public class SettingFragment extends BaseFragment {
                 getResources()
         );
         viewWidth = GalleryLoader.calculateDisplaySize(activity);
+        bindComponent();
+        setRegisteredInfo();
     }
+
+    @Click(R.id.main_button_save)
+    void saveButtonClicked() {
+        mSharedPrefsHelper.saveName(nameText.getText().toString());
+        mSharedPrefsHelper.saveKeyStorePid(idText.getText().toString());
+        mSharedPrefsHelper.saveImageUri(m_uri.toString());
+        activity.finish();
+    }
+
 
     @Click(R.id.main_button_image_register)
     void imageRegisterButtonClicked() {
-        Toast.makeText(activity.getApplicationContext(), "SHOWGALLEY", Toast.LENGTH_SHORT).show();
         showGallery();
     }
 
-    private void showGallery() {
+    public void bindComponent() {
+        nameText = (EditText) activity.findViewById(R.id.name_text);
+        idText = (EditText) activity.findViewById(R.id.id_text);
+        iconImageView = (ImageView) activity.findViewById(R.id.imageView);
+    }
 
+
+    public void setRegisteredInfo() {
+        nameText.setText(mSharedPrefsHelper.loadName());
+        idText.setText(mSharedPrefsHelper.loadKeyStorePid());
+        iconImageView.setImageURI(Uri.parse(mSharedPrefsHelper.loadImageUri()));
+    }
+
+    private void showGallery() {
         //カメラの起動Intentの用意
         String photoName = System.currentTimeMillis() + ".jpg";
         ContentValues contentValues = new ContentValues();
@@ -98,12 +124,12 @@ public class SettingFragment extends BaseFragment {
             );
 
             // 画像を設定
-            ImageView imageView = (ImageView) activity.findViewById(R.id.imageView);
-            imageView.setImageURI(resultUri);
+            m_uri = resultUri;
+            iconImageView.setImageURI(resultUri);
 
             int orientation = GalleryLoader.getOrientation(m_uri);
             if (orientation > 0 && orientation < 9) {
-                setMatrix(imageView, orientation, (int) viewWidth);
+                setMatrix(iconImageView, orientation, (int) viewWidth);
             }
         }
     }
