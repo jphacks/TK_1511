@@ -17,7 +17,7 @@ import tk11.jphacks.titech.R;
  * Created by atsuhirotsuruta on 11/29/2015 AD.
  */
 @XmlTag("ExtensionBrowserCanvas")
-public class ExtensionBrowserCanvas extends FrameLayout{
+public class ExtensionBrowserCanvas extends FrameLayout {
     private LinearLayout filter;
     private LinearLayout animationFilter;
     private LinearLayout frameFilter;
@@ -26,6 +26,10 @@ public class ExtensionBrowserCanvas extends FrameLayout{
 
     public final static int RED_FILTER = 0;
     public final static int WHITE_FILTER = 1;
+    public final static int CLEAR_FILTER = 2;
+    public final static int GREEN_FILTER = 3;
+    public final static int BLUE_FILTER = 4;
+    public final static int ORANGE_FILTER = 5;
 
     public ExtensionBrowserCanvas(Context context) {
         super(context);
@@ -66,18 +70,27 @@ public class ExtensionBrowserCanvas extends FrameLayout{
     }
 
     public void setStandardFilter(int filterType) {
-        if (filterType == 0) {
+        if (filterType == RED_FILTER) {
             filter.setBackgroundColor(getResources().getColor(R.color.red_filter));
-        } else {
+        } else if (filterType == WHITE_FILTER) {
             filter.setBackgroundColor(getResources().getColor(R.color.white_filter));
+        } else if (filterType == CLEAR_FILTER) {
+            filter.setBackgroundColor(getResources().getColor(R.color.clear_filter));
+        } else if (filterType == GREEN_FILTER) {
+            filter.setBackgroundColor(getResources().getColor(R.color.green_filter));
+        } else if (filterType == ORANGE_FILTER) {
+            filter.setBackgroundColor(getResources().getColor(R.color.orange_filter));
+        } else if (filterType == BLUE_FILTER) {
+            filter.setBackgroundColor(getResources().getColor(R.color.blue_filter));
         }
     }
 
     public void setAnimationFilter(Activity activity) {
         if (particleSystem != null) return;
-        particleSystem = new ParticleSystem(activity, 80, R.drawable.star, 10000)
+        particleSystem = new ParticleSystem(activity, 80, R.drawable.star, 1000)
                 .setSpeedModuleAndAngleRange(0f, 0.3f, 0, 360)
                 .setAcceleration(0.00005f, 90);
+
         particleSystem.emit(animationFilter, 8);
     }
 
