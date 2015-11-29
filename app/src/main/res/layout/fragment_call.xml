@@ -3,17 +3,16 @@
     android:id="@+id/sliding_layout"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     android:gravity="bottom"
-    tools:context="tk11.jphacks.titech.view.fragment.CallFragment"
-    android:clickable="true">
-
+    tools:context="tk11.jphacks.titech.view.fragment.CallFragment">
 
     <HorizontalScrollView
         android:id="@+id/button_container"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/base_black"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="@color/base_black">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,10 +63,15 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:background="@color/colorAccent">
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <ExtensionBrowserCanvas
             android:id="@+id/svPrimary"
@@ -77,8 +81,8 @@
         <ExtensionBrowserCanvas
             android:id="@+id/extension_canvas"
             android:layout_width="200dp"
-            android:layout_height="263dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"></ExtensionBrowserCanvas>
-    </RelativeLayout>
+
+            android:layout_height="300dp"
+            android:layout_gravity="bottom|right" />
+    </FrameLayout>
 </com.daimajia.swipe.SwipeLayout>

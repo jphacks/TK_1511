@@ -5,9 +5,11 @@ import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 
 import com.daimajia.swipe.SwipeLayout;
@@ -16,7 +18,6 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
-import org.json.JSONArray;
 
 import io.skyway.Peer.Browser.MediaConstraints;
 import io.skyway.Peer.Browser.MediaStream;
@@ -46,14 +47,22 @@ public class CallFragment extends BaseFragment {
     @ViewById(R.id.button_container)
     HorizontalScrollView buttonContainer;
 
+    @ViewById(R.id.button1)
+    Button button1;
+
     private Peer _peer;
     private MediaConnection _media;
     private MediaStream _msLocal;
     private MediaStream _msRemote;
     private Handler _handler;
     private String _id;
-    private String[] _listPeerIds;
     private boolean _bCalling;
+    // chat
+//    private DataConnection _data;
+//    private Boolean _bConnecting;
+//    private Runnable _runAddLog;
+//    private List<String> _aryLogs;
+//    private Bitmap _image;
 
     @ViewById(R.id.red_filter_canvas)
     ExtensionBrowserCanvas redCanvas;
@@ -144,7 +153,6 @@ public class CallFragment extends BaseFragment {
         resetmCanvas.addSrc(_msLocal, TRACK_NUMBAR);
     }
 
-
     @AfterViews
     void onAfterViews() {
         Activity activity = getActivity();
@@ -201,18 +209,27 @@ public class CallFragment extends BaseFragment {
         options.key = "20acaf0d-4c8f-4d3b-bfa0-d320db8f283c";
         options.domain = "tk11.titech.jphacks";
 
-
-        _peer = new Peer(getActivity(), options);
+        String receivePeerId = mSharedPrefsHelper.loadKeyStorePid();
+        Log.e("receivedId", receivePeerId);
+        _peer = new Peer(getActivity().getApplicationContext(), receivePeerId, options);
         setPeerCallback(_peer);
-
         Navigator.initialize(_peer);
         MediaConstraints constraints = new MediaConstraints();
         _msLocal = Navigator.getUserMedia(constraints);
 
         extentionBrowserCanvas.addSrc(_msLocal, TRACK_NUMBAR);
         _bCalling = false;
-
         setupFooter();
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!_bCalling) {
+                    selectingPeer();
+                } else {
+                    closing();
+                }
+            }
+        });
     }
 
     /**
@@ -237,7 +254,6 @@ public class CallFragment extends BaseFragment {
 
         if (null != _media) {
             setMediaCallback(_media);
-
             _bCalling = true;
         }
 
@@ -254,6 +270,22 @@ public class CallFragment extends BaseFragment {
                 }
             }
         });
+
+        // !!!: Event/Connection
+//        peer.on(Peer.PeerEventEnum.CONNECTION, new OnCallback() {
+//            @Override
+//            public void onCallback(Object object) {
+//                // TODO: PeerEvent/CONNECTION
+//
+//                if (!(object instanceof DataConnection)) {
+//                    return;
+//                }
+//                _data = (DataConnection) object;
+//                setDataCallback(_data);
+//                _bConnecting = true;
+//            }
+//        });
+
 
         peer.on(Peer.PeerEventEnum.CALL, new OnCallback() {
             @Override
@@ -296,13 +328,21 @@ public class CallFragment extends BaseFragment {
             public void onCallback(Object object) {
                 PeerError error = (PeerError) object;
 
-                Log.d(TAG, "[On/Error]" + error);
+                Log.e(TAG, "[On/Error]" + error.type);
 
                 String strMessage = "" + error;
                 String strLabel = getString(android.R.string.ok);
 
+                MessageDialogFragment dialog = new MessageDialogFragment();
+                dialog.setPositiveLabel(strLabel);
+                dialog.setMessage(strMessage);
+
+                dialog.show(getFragmentManager(), "error");
+
+                Log.e("_bCalling", String.valueOf(_bCalling));
             }
         });
+
     }
 
 
@@ -322,6 +362,15 @@ public class CallFragment extends BaseFragment {
             @Override
             public void onCallback(Object object) {
                 _msRemote = (MediaStream) object;
+
+                String strMessage = "通信を受信しました";
+                String strLabel = getString(android.R.string.ok);
+
+                MessageDialogFragment dialog = new MessageDialogFragment();
+                dialog.setPositiveLabel(strLabel);
+                dialog.setMessage(strMessage);
+
+                dialog.show(getFragmentManager(), "通信キャッチ");
 
                 primaryCanvas.addSrc(_msRemote, 0);
             }
@@ -370,59 +419,185 @@ public class CallFragment extends BaseFragment {
         media.on(MediaConnection.MediaEventEnum.ERROR, null);
     }
 
-    // Listing all peers
-    void listingPeers() {
-        if ((null == _peer) || (null == _id) || (0 == _id.length())) {
-            return;
-        }
+    //////////////////////////////////////////////////////////////////////////////////
+    ///////////////  START: Set SkyWay peer Data connection callback   ///////////////
+    //////////////////////////////////////////////////////////////////////////////////
+//    void setDataCallback(DataConnection data) {
+//        // !!!: DataEvent/Open
+//        data.on(DataConnection.DataEventEnum.OPEN, new OnCallback() {
+//            @Override
+//            public void onCallback(Object object) {
+//                // TODO: DataEvent/OPEN
+//                //addLog("system", "serialization:" + _data.serialization.toString());
+//                //connected();
+//            }
+//        });
+//
+//        // !!!: DataEvent/Data
+//        data.on(DataConnection.DataEventEnum.DATA, new OnCallback() {
+//            @Override
+//            public void onCallback(Object object) {
+//                String strValue = null;
+//
+//                if (object instanceof String) {
+//                    // TODO: Receive String object
+//                    strValue = (String) object;
+//                } else if (object instanceof Double) {
+//                    Double doubleValue = (Double) object;
+//
+//                    strValue = doubleValue.toString();
+//                } else if (object instanceof ArrayList) {
+//                    // TODO: receive Array list object
+//                    ArrayList arrayValue = (ArrayList) object;
+//
+//                    StringBuilder sbResult = new StringBuilder();
+//
+//                    for (Object item : arrayValue) {
+//                        sbResult.append(item.toString());
+//                        sbResult.append("\n");
+//                    }
+//
+//                    strValue = sbResult.toString();
+//                } else if (object instanceof Map) {
+//                    // TODO: receive Map object
+//                    Map mapValue = (Map) object;
+//
+//                    StringBuilder sbResult = new StringBuilder();
+//
+//                    Object[] objKeys = mapValue.keySet().toArray();
+//                    for (Object objKey : objKeys) {
+//                        Object objValue = mapValue.get(objKey);
+//
+//                        sbResult.append(objKey.toString());
+//                        sbResult.append(" = ");
+//                        sbResult.append(objValue.toString());
+//                        sbResult.append("\n");
+//                    }
+//
+//                    strValue = sbResult.toString();
+//                } else if (object instanceof ByteBuffer) {
+//                    // TODO: receive ByteBuffer object
+//
+//                    ByteBuffer bbValue = (ByteBuffer) object;
+//                    Bitmap bmp = null;
+//
+//                    byte[] byteArray = new byte[bbValue.remaining()];
+//                    bbValue.get(byteArray);
+//                    if (byteArray != null) {
+//                        bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+//                    }
+//                    //_image = bmp;
+//
+//                    strValue = "Received Image.(Type:ByteBuffer)";
+//                }
+//                addLog("Partner", strValue);
+//            }
+//        });
+//
+//        // !!!: DataEvent/Close
+//        data.on(DataConnection.DataEventEnum.CLOSE, new OnCallback() {
+//            @Override
+//            public void onCallback(Object object) {
+//                // TODO: DataEvent/CLOSE
+//                _data = null;
+//                disconnected();
+//            }
+//        });
+//
+//        // !!!: DataEvent/Error
+//        data.on(DataConnection.DataEventEnum.ERROR, new OnCallback() {
+//            @Override
+//            public void onCallback(Object object) {
+//                // TODO: DataEvent/ERROR
+//                PeerError error = (PeerError) object;
+//
+//                Log.d(TAG, "[On/DataError]" + error);
+//
+//                String strMessage = error.message;
+//                String strLabel = getString(android.R.string.ok);
+//
+//                MessageDialogFragment dialog = new MessageDialogFragment();
+//                dialog.setPositiveLabel(strLabel);
+//                dialog.setMessage(strMessage);
+//
+//                dialog.show(getFragmentManager(), "error");
+//            }
+//        });
+//    }
+    //////////////////////////////////////////////////////////////////////////////////
+    /////////////////  END: Set SkyWay peer Data connection callback   ///////////////
+    //////////////////////////////////////////////////////////////////////////////////
 
-        _peer.listAllPeers(new OnCallback() {
-            @Override
-            public void onCallback(Object object) {
-                if (!(object instanceof JSONArray)) {
-                    return;
-                }
+//    void addLog(String name, String strLog) {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("[");
+//        sb.append(name);
+//        sb.append("]");
+//        sb.append(strLog);
+//        sb.append("\r\n");
+//
+//        String strMessage = sb.toString();
+//
+//        if (null == _aryLogs) {
+//            _aryLogs = Collections.synchronizedList(new ArrayList<String>());
+//        }
+//
+//        _aryLogs.add(strMessage);
+//
+//        if (null == _runAddLog) {
+//            _runAddLog = new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (null == _aryLogs) {
+//                        return;
+//                    }
+//
+//                    for (; ; ) {
+//                        if (0 >= _aryLogs.size()) {
+//                            break;
+//                        }
+//
+//                        String strMsg = _aryLogs.get(0);
+//                        Log.e("message", strMsg);
+//
+//                        _aryLogs.remove(0);
+//                    }
+//                }
+//            };
+//        }
+//
+//        _handler.post(_runAddLog);
+//    }
+//
+//    void sendString() {
+//        String strData = "Hello SkyWay.";
+//
+//        boolean bResult = _data.send(strData);
+//        if (true == bResult) {
+//            addLog("You", strData);
+//        }
+//    }
+//
+//    void connected() {
+//        _bConnecting = true;
+//    }
+//
+//    void disconnected() {
+//        _bConnecting = false;
+//    }
 
-                JSONArray peers = (JSONArray) object;
-
-                StringBuilder sbItems = new StringBuilder();
-                for (int i = 0; peers.length() > i; i++) {
-                    String strValue = "";
-                    try {
-                        strValue = peers.getString(i);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    if (0 == _id.compareToIgnoreCase(strValue)) {
-                        continue;
-                    }
-
-                    if (0 < sbItems.length()) {
-                        sbItems.append(",");
-                    }
-
-                    sbItems.append(strValue);
-                }
-
-                String strItems = sbItems.toString();
-                _listPeerIds = strItems.split(",");
-
-                if ((null != _listPeerIds) && (0 < _listPeerIds.length)) {
-                    selectingPeer();
-                }
-            }
-        });
-
-    }
 
     /**
      * Selecting peer
      */
     void selectingPeer() {
+
+        Log.e(TAG, "selecting peer");
         if (null == _handler) {
             return;
         }
+        Log.e(TAG, "selecting peer2");
+
 
         _handler.post(new Runnable() {
             @Override
@@ -430,11 +605,16 @@ public class CallFragment extends BaseFragment {
                 _handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (mSharedPrefsHelper.loadName().equals("id1")) {
-                            calling("id2");
+                        Log.e(TAG, "selecting peer3");
+                        Log.e("自分のID", mSharedPrefsHelper.loadKeyStorePid());
+                        if (mSharedPrefsHelper.loadKeyStorePid().equals("id1")) {
+                            calling("id3");
+                            Log.e("呼び出しID", "id3");
                         } else {
                             calling("id1");
+                            Log.e("呼び出しID", "id1");
                         }
+
                     }
                 });
             }
@@ -509,16 +689,16 @@ public class CallFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         // Disable Sleep and Screen Lock
-        Window wnd = getActivity().getWindow();
-        wnd.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-        wnd.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//        Window wnd = getActivity().getWindow();
+//        wnd.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+//        wnd.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         // Set volume control stream type to WebRTC audio.
-        getActivity().setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
+        //getActivity().setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
     }
 
     @Override
@@ -540,7 +720,6 @@ public class CallFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         destroyPeer();
-        _listPeerIds = null;
         _handler = null;
         super.onDestroy();
     }
