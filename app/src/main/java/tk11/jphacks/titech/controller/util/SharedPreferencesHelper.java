@@ -15,8 +15,10 @@ import android.support.annotation.NonNull;
 public class SharedPreferencesHelper {
 
     private static final String KEY_STORE_PID = "key_store_pid";
+    private static final String KEY_PARTNER_STORE_PID = "key_partner_store_pid";
     private static final String KEY_NAME = "key_name";
     private static final String KEY_IMAGE_URI = "key_image_uri";
+    private static final String KEY_PARTNER_NAME = "key_partner_name";
 
     /**
      * SharedPreference.
@@ -37,12 +39,30 @@ public class SharedPreferencesHelper {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
+
+    public void savePartnerKeyStorePid(String key_partner_store_pid) {
+        mPrefs.edit().putString(KEY_PARTNER_STORE_PID, key_partner_store_pid).apply();
+    }
+
+    public String loadPartnerKeyStorePid() {
+        return mPrefs.getString(KEY_PARTNER_STORE_PID, "");
+    }
+
     public void saveKeyStorePid(String key_store_pid) {
         mPrefs.edit().putString(KEY_STORE_PID, key_store_pid).apply();
     }
 
     public String loadKeyStorePid() {
         return mPrefs.getString(KEY_STORE_PID, "");
+    }
+
+
+    public void savePartnerName(String key_partner_name) {
+        mPrefs.edit().putString(KEY_PARTNER_NAME, key_partner_name).apply();
+    }
+
+    public String loadPartnerName() {
+        return mPrefs.getString(KEY_PARTNER_NAME, "");
     }
 
     public void saveName(String key_name) {
