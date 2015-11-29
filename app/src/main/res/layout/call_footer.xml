@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/red_filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="赤" />
+
+    <Button
+        android:id="@+id/white_filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="白" />
+
+    <Button
+        android:id="@+id/star_anim_filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="キラキラ" />
+
+    <Button
+        android:id="@+id/frame_filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="フレーム" />
+
+    <Button
+        android:id="@+id/reset_filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="リセット" />
+
+</LinearLayout>

@@ -35,6 +35,7 @@ import tk11.jphacks.titech.view.view.ExtensionBrowserCanvas;
 public class CallFragment extends BaseFragment {
 
     private static final String TAG = CallFragment.class.getSimpleName();
+
     @ViewById(R.id.extension_canvas)
     ExtensionBrowserCanvas extentionBrowserCanvas;
     @ViewById(R.id.svPrimary)

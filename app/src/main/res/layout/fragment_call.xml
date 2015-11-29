@@ -13,42 +13,7 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/red_filter_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="赤" />
-
-            <Button
-                android:id="@+id/white_filter_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="白" />
-
-            <Button
-                android:id="@+id/frame_filter_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="フレーム" />
-
-            <Button
-                android:id="@+id/star_anim_filter_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="キラキラ" />
-
-            <Button
-                android:id="@+id/reset_filter_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="リセット" />
-
-        </LinearLayout>
+        <include layout="@layout/call_footer" />
     </HorizontalScrollView>
 
     <RelativeLayout
