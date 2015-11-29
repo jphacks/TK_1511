@@ -15,6 +15,8 @@ import android.support.annotation.NonNull;
 public class SharedPreferencesHelper {
 
     private static final String KEY_STORE_PID = "key_store_pid";
+    private static final String KEY_NAME = "key_name";
+    private static final String KEY_IMAGE_URI = "key_image_uri";
 
     /**
      * SharedPreference.
@@ -43,4 +45,19 @@ public class SharedPreferencesHelper {
         return mPrefs.getString(KEY_STORE_PID, "");
     }
 
+    public void saveName(String key_name) {
+        mPrefs.edit().putString(KEY_NAME, key_name).apply();
+    }
+
+    public String loadName() {
+        return mPrefs.getString(KEY_NAME, "");
+    }
+
+    public void saveImageUri(String key_image_uri) {
+        mPrefs.edit().putString(KEY_IMAGE_URI, key_image_uri).apply();
+    }
+
+    public String loadImageUri() {
+        return mPrefs.getString(KEY_IMAGE_URI, "");
+    }
 }

@@ -15,13 +15,13 @@ import tk11.jphacks.titech.controller.util.SharedPreferencesHelper;
  * 基底のFragment.
  */
 abstract public class BaseFragment extends Fragment {
-    protected SharedPreferencesHelper mGaHelper;
+    protected SharedPreferencesHelper mSharedPrefsHelper;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mGaHelper = new SharedPreferencesHelper(getActivity().getApplicationContext());
+        mSharedPrefsHelper = new SharedPreferencesHelper(getActivity().getApplicationContext());
     }
 
     @Override
