@@ -35,6 +35,7 @@ import tk11.jphacks.titech.view.view.ExtensionBrowserCanvas;
 public class CallFragment extends BaseFragment {
 
     private static final String TAG = CallFragment.class.getSimpleName();
+    private static final int TRACK_NUMBAR = 0;
 
     @ViewById(R.id.extension_canvas)
     ExtensionBrowserCanvas extentionBrowserCanvas;
@@ -44,6 +45,7 @@ public class CallFragment extends BaseFragment {
     SwipeLayout slidingUpPanelLayout;
     @ViewById(R.id.button_container)
     HorizontalScrollView buttonContainer;
+
     private Peer _peer;
     private MediaConnection _media;
     private MediaStream _msLocal;
@@ -53,33 +55,60 @@ public class CallFragment extends BaseFragment {
     private String[] _listPeerIds;
     private boolean _bCalling;
 
-    @Click(R.id.red_filter_button)
+    @ViewById(R.id.red_filter_canvas)
+    ExtensionBrowserCanvas redCanvas;
+
+    @ViewById(R.id.white_filter_canvas)
+    ExtensionBrowserCanvas whiteCanvas;
+
+    @ViewById(R.id.frame_filter_canvas)
+    ExtensionBrowserCanvas frameCanvas;
+
+    @ViewById(R.id.star_anim_filter_canvas)
+    ExtensionBrowserCanvas staranimCanvas;
+
+    @ViewById(R.id.reset_filter_canvas)
+    ExtensionBrowserCanvas resetmCanvas;
+
+    @Click(R.id.red_filter_canvas)
     void clickRedFilter() {
         extentionBrowserCanvas.setStandardFilter(ExtensionBrowserCanvas.RED_FILTER);
     }
 
-    @Click(R.id.white_filter_button)
+    @Click(R.id.white_filter_canvas)
     void clickWhiteFilter() {
         extentionBrowserCanvas.setStandardFilter(ExtensionBrowserCanvas.WHITE_FILTER);
     }
 
-    @Click(R.id.frame_filter_button)
+    @Click(R.id.frame_filter_canvas)
     void clickFrameFilter() {
         extentionBrowserCanvas.setFrameFilter();
     }
 
-    @Click(R.id.star_anim_filter_button)
+    @Click(R.id.star_anim_filter_canvas)
     void clickStarAnimFilter() {
         extentionBrowserCanvas.setAnimationFilter(getActivity());
     }
 
-    @Click(R.id.reset_filter_button)
+    @Click(R.id.reset_filter_canvas)
     void clickResetButton() {
         extentionBrowserCanvas.clearFilter();
     }
 
-    @Click(R.id.sliding_layout)
-    void clickSlidingLayout() {
+
+    public void setupFooter() {
+        redCanvas.addSrc(_msLocal, TRACK_NUMBAR);
+        redCanvas.setStandardFilter(ExtensionBrowserCanvas.RED_FILTER);
+
+        whiteCanvas.addSrc(_msLocal, TRACK_NUMBAR);
+        whiteCanvas.setStandardFilter(ExtensionBrowserCanvas.WHITE_FILTER);
+
+        frameCanvas.addSrc(_msLocal, TRACK_NUMBAR);
+        frameCanvas.setFrameFilter();
+
+        staranimCanvas.addSrc(_msLocal, TRACK_NUMBAR);
+
+        resetmCanvas.addSrc(_msLocal, TRACK_NUMBAR);
     }
 
 
@@ -93,7 +122,6 @@ public class CallFragment extends BaseFragment {
                 activity.getWindow(),
                 getResources()
         );
-
         slidingUpPanelLayout.addDrag(SwipeLayout.DragEdge.Bottom, buttonContainer);
         slidingUpPanelLayout.setRightSwipeEnabled(false);
         slidingUpPanelLayout.setLeftSwipeEnabled(false);
@@ -148,8 +176,10 @@ public class CallFragment extends BaseFragment {
         MediaConstraints constraints = new MediaConstraints();
         _msLocal = Navigator.getUserMedia(constraints);
 
-        extentionBrowserCanvas.addSrc(_msLocal, 0);
+        extentionBrowserCanvas.addSrc(_msLocal, TRACK_NUMBAR);
         _bCalling = false;
+
+        setupFooter();
     }
 
     /**

@@ -24,6 +24,8 @@ public class ExtensionBrowserCanvas extends FrameLayout{
     private Canvas browserCanvas;
     private ParticleSystem particleSystem;
 
+//    private
+
     public final static int RED_FILTER = 0;
     public final static int WHITE_FILTER = 1;
 
