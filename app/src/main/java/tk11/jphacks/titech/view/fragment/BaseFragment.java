@@ -17,7 +17,6 @@ import tk11.jphacks.titech.controller.util.SharedPreferencesHelper;
 abstract public class BaseFragment extends Fragment {
     protected SharedPreferencesHelper mSharedPrefsHelper;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
