@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App Name-->
-    <string name="app_name">JPHACKS_11</string>
+    <string name="app_name">Viple</string>
     <!-- Page Titles (title_(class name)_(page name))-->
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_home">HomeActivity</string>

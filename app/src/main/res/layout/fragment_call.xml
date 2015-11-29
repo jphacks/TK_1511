@@ -31,6 +31,21 @@
                 android:layout_height="100dp" />
 
             <ExtensionBrowserCanvas
+                android:id="@+id/orange_filter_canvas"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+            <ExtensionBrowserCanvas
+                android:id="@+id/blue_filter_canvas"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+            <ExtensionBrowserCanvas
+                android:id="@+id/green_filter_canvas"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+            <ExtensionBrowserCanvas
                 android:id="@+id/frame_filter_canvas"
                 android:layout_width="100dp"
                 android:layout_height="100dp" />
