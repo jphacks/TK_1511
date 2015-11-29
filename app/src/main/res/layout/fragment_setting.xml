@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="80dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/no_image_icon"
+        android:src="@drawable/no_image_small"
         app:riv_border_width="10dp"
         app:riv_border_color="@color/base_white"
         app:riv_mutate_background="true"
