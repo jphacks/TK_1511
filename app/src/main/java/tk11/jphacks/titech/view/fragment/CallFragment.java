@@ -1,10 +1,7 @@
 package tk11.jphacks.titech.view.fragment;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.content.Context;
 import android.media.AudioManager;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -21,7 +18,6 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 
-import io.skyway.Peer.Browser.Canvas;
 import io.skyway.Peer.Browser.MediaConstraints;
 import io.skyway.Peer.Browser.MediaStream;
 import io.skyway.Peer.Browser.Navigator;
@@ -39,26 +35,22 @@ import tk11.jphacks.titech.view.view.ExtensionBrowserCanvas;
 public class CallFragment extends BaseFragment {
 
     private static final String TAG = CallFragment.class.getSimpleName();
+    @ViewById(R.id.extension_canvas)
+    ExtensionBrowserCanvas extentionBrowserCanvas;
+    @ViewById(R.id.svPrimary)
+    ExtensionBrowserCanvas primaryCanvas;
+    @ViewById(R.id.btnAction)
+    Button btnAction;
+    @ViewById(R.id.tvOwnId)
+    TextView tvOwnId;
     private Peer _peer;
     private MediaConnection _media;
     private MediaStream _msLocal;
     private MediaStream _msRemote;
     private Handler _handler;
-    private String   _id;
+    private String _id;
     private String[] _listPeerIds;
-    private boolean  _bCalling;
-
-    @ViewById(R.id.extension_canvas)
-    ExtensionBrowserCanvas extentionBrowserCanvas;
-
-    @ViewById(R.id.svPrimary)
-    ExtensionBrowserCanvas primaryCanvas;
-
-    @ViewById(R.id.btnAction)
-    Button btnAction;
-
-    @ViewById(R.id.tvOwnId)
-    TextView tvOwnId;
+    private boolean _bCalling;
 
     @Click(R.id.red_filter_button)
     void clickRedFilter() {
@@ -117,17 +109,14 @@ public class CallFragment extends BaseFragment {
         extentionBrowserCanvas.addSrc(_msLocal, 0);
         _bCalling = false;
         btnAction.setEnabled(true);
-        btnAction.setOnClickListener(new View.OnClickListener()
-        {
+        btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 v.setEnabled(false);
 
                 if (!_bCalling) {
                     listingPeers();
-                }
-                else {
+                } else {
                     closing();
                 }
                 v.setEnabled(true);
@@ -138,6 +127,7 @@ public class CallFragment extends BaseFragment {
 
     /**
      * Media connecting to remote peer.
+     *
      * @param strPeerId Remote peer.
      */
     void calling(String strPeerId) {
@@ -179,8 +169,7 @@ public class CallFragment extends BaseFragment {
 
         peer.on(Peer.PeerEventEnum.CALL, new OnCallback() {
             @Override
-            public void onCallback(Object object)
-            {
+            public void onCallback(Object object) {
                 Log.d(TAG, "[On/Call]");
                 if (!(object instanceof MediaConnection)) {
                     return;
@@ -199,31 +188,25 @@ public class CallFragment extends BaseFragment {
         });
 
         // !!!: Event/Close
-        peer.on(Peer.PeerEventEnum.CLOSE, new OnCallback()
-        {
+        peer.on(Peer.PeerEventEnum.CLOSE, new OnCallback() {
             @Override
-            public void onCallback(Object object)
-            {
+            public void onCallback(Object object) {
                 Log.d(TAG, "[On/Close]");
             }
         });
 
         // !!!: Event/Disconnected
-        peer.on(Peer.PeerEventEnum.DISCONNECTED, new OnCallback()
-        {
+        peer.on(Peer.PeerEventEnum.DISCONNECTED, new OnCallback() {
             @Override
-            public void onCallback(Object object)
-            {
+            public void onCallback(Object object) {
                 Log.d(TAG, "[On/Disconnected]");
             }
         });
 
         // !!!: Event/Error
-        peer.on(Peer.PeerEventEnum.ERROR, new OnCallback()
-        {
+        peer.on(Peer.PeerEventEnum.ERROR, new OnCallback() {
             @Override
-            public void onCallback(Object object)
-            {
+            public void onCallback(Object object) {
                 PeerError error = (PeerError) object;
 
                 Log.d(TAG, "[On/Error]" + error);
@@ -248,11 +231,9 @@ public class CallFragment extends BaseFragment {
 
 
     void setMediaCallback(MediaConnection media) {
-        media.on(MediaConnection.MediaEventEnum.STREAM, new OnCallback()
-        {
+        media.on(MediaConnection.MediaEventEnum.STREAM, new OnCallback() {
             @Override
-            public void onCallback(Object object)
-            {
+            public void onCallback(Object object) {
                 _msRemote = (MediaStream) object;
 
                 primaryCanvas.addSrc(_msRemote, 0);
@@ -260,11 +241,9 @@ public class CallFragment extends BaseFragment {
         });
 
         // !!!: MediaEvent/Close
-        media.on(MediaConnection.MediaEventEnum.CLOSE, new OnCallback()
-        {
+        media.on(MediaConnection.MediaEventEnum.CLOSE, new OnCallback() {
             @Override
-            public void onCallback(Object object)
-            {
+            public void onCallback(Object object) {
                 if (null == _msRemote) {
                     return;
                 }
@@ -280,11 +259,9 @@ public class CallFragment extends BaseFragment {
         });
 
         // !!!: MediaEvent/Error
-        media.on(MediaConnection.MediaEventEnum.ERROR, new OnCallback()
-        {
+        media.on(MediaConnection.MediaEventEnum.ERROR, new OnCallback() {
             @Override
-            public void onCallback(Object object)
-            {
+            public void onCallback(Object object) {
                 PeerError error = (PeerError) object;
 
                 Log.d(TAG, "[On/MediaError]" + error);
@@ -308,8 +285,7 @@ public class CallFragment extends BaseFragment {
     }
 
     // Listing all peers
-    void listingPeers()
-    {
+    void listingPeers() {
         if ((null == _peer) || (null == _id) || (0 == _id.length())) {
             return;
         }
@@ -357,8 +333,7 @@ public class CallFragment extends BaseFragment {
     /**
      * Selecting peer
      */
-    void selectingPeer()
-    {
+    void selectingPeer() {
         if (null == _handler) {
             return;
         }
@@ -366,19 +341,24 @@ public class CallFragment extends BaseFragment {
         _handler.post(new Runnable() {
             @Override
             public void run() {
-                FragmentManager mgr = getFragmentManager();
-
+                _handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mSharedPrefsHelper.loadName().equals("id1")) {
+                            calling("id2");
+                        } else {
+                            calling("id1");
+                        }
+                    }
+                });
             }
         });
     }
 
-
-
     /**
      * Closing connection.
      */
-    void closing()
-    {
+    void closing() {
         if (false == _bCalling) {
             return;
         }
@@ -390,8 +370,7 @@ public class CallFragment extends BaseFragment {
         }
     }
 
-    void updateUI()
-    {
+    void updateUI() {
         _handler.post(new Runnable() {
             @Override
             public void run() {
@@ -418,8 +397,7 @@ public class CallFragment extends BaseFragment {
     /**
      * Destroy Peer object.
      */
-    private void destroyPeer()
-    {
+    private void destroyPeer() {
         closing();
 
         if (null != _msRemote) {
@@ -439,8 +417,7 @@ public class CallFragment extends BaseFragment {
         }
 
         if (null != _media) {
-            if (_media.isOpen)
-            {
+            if (_media.isOpen) {
                 _media.close();
             }
 
@@ -464,7 +441,6 @@ public class CallFragment extends BaseFragment {
             _peer = null;
         }
     }
-
 
 
     @Override
