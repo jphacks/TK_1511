@@ -228,7 +228,7 @@ public class SettingFragment extends BaseFragment {
     public void onDestroy() {
         destroyPeer();
         super.onDestroy();
-        android.os.Process.killProcess(android.os.Process.myPid());
+        // android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     @Click(R.id.main_button_image_register)
