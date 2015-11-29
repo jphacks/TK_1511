@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
@@ -62,6 +63,33 @@ public class CallFragment extends BaseFragment {
 
     @ViewById(R.id.tvOwnId)
     TextView tvOwnId;
+
+    @Click(R.id.red_filter_button)
+    void clickRedFilter() {
+        extentionBrowserCanvas.setStandardFilter(ExtensionBrowserCanvas.RED_FILTER);
+    }
+
+    @Click(R.id.white_filter_button)
+    void clickWhiteFilter() {
+        extentionBrowserCanvas.setStandardFilter(ExtensionBrowserCanvas.WHITE_FILTER);
+    }
+
+    @Click(R.id.frame_filter_button)
+    void clickFrameFilter() {
+        extentionBrowserCanvas.setFrameFilter();
+    }
+
+    @Click(R.id.star_anim_filter_button)
+    void clickStarAnimFilter() {
+        extentionBrowserCanvas.setAnimationFilter(getActivity());
+    }
+
+    @Click(R.id.reset_filter_button)
+    void clickResetButton() {
+        extentionBrowserCanvas.clearFilter();
+    }
+
+
 
     @AfterViews
     void onAfterViews() {
